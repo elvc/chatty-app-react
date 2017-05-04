@@ -5,7 +5,7 @@ export default class ChatBar extends Component {
 
   // propTypes validation
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.string.isRequired,
     addMessage: PropTypes.func.isRequired,
   }
 
@@ -18,13 +18,15 @@ export default class ChatBar extends Component {
     super(props);
     this.state = {
       content: '',
-      user: props.user.name
+      user: props.username
     }
   }
 
   submitUserChange = (event) => {
-    this.props.onUserChange(this.state.user);
-    this.setState({ user: this.state.user });
+    if (event.key === 'Enter') {
+      this.props.changeUser(this.state.user);
+      event.target.value = '';
+    }
   }
 
   submitPost = (event) => {
@@ -46,8 +48,8 @@ export default class ChatBar extends Component {
       <footer className="chatbar">
         <input
           className="chatbar-username"
-          placeholder={this.props.user.name}
-          onBlur={this.submitUserChange}
+          placeholder={this.props.username}
+          onKeyPress={this.submitUserChange}
           onChange={this.handleKeyChange('user')} />
         <input
           className="chatbar-message"
