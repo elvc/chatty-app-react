@@ -6,7 +6,7 @@ const uuidV4 = require('uuid/v4');
 
 // Set the port to 3001
 const PORT = 3001;
-
+const colors = ['#a3fd7f', '#b4f11', '#283FB3', '#DB18B9'];
 // Create a new express server
 const server = express()
   // Make the express server serve static assets (html, javascript, css) from the /public folder
@@ -14,9 +14,7 @@ const server = express()
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
 // Create the WebSockets server
-const wss = new SocketServer({
-  server
-});
+const wss = new SocketServer({server});
 
 function broadcast(data) {
   wss.clients.forEach(function each(client) {
@@ -26,11 +24,16 @@ function broadcast(data) {
   });
 }
 
+function getRandomArrayElement(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
-
+  const userColor = getRandomArrayElement(colors);
+ 
   // broadcast user online count
   const userMsg = {
     type: 'userCount',
@@ -44,6 +47,7 @@ wss.on('connection', (ws) => {
 
     switch (msgTemp.type) {
       case 'postMessage':
+        msgTemp.color = userColor;
         msgTemp.type = 'incomingMessage';
         break;
       case 'postNotification':

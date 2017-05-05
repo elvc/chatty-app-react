@@ -7,7 +7,6 @@ import Counter from './Counter.jsx';
 const data = {
   currentUser: { name: 'Anonymous' },
   messages: [],
-  type: '',
   userCount: 0
 };
 
@@ -27,7 +26,7 @@ export default class App extends Component {
   // user name change and pass it to server
   changeUser = (user) => {
     const newMessage = { type: 'postNotification', content: `***${this.state.currentUser.name}*** changed their name to ***${user}***` };
-    this.setState({ currentUser:{name: user} });
+    this.setState({ currentUser: { name: user } });
     this.socket.send(JSON.stringify(newMessage));
   }
 
@@ -42,19 +41,19 @@ export default class App extends Component {
 
   // message from server broadcast
   incomingMessage = (event) => {
+    console.log('event', event);
     const msg = JSON.parse(event.data);
-
     switch (msg.type) {
       case "incomingMessage":
-        // allow fall-through
+      // allow fall-through
 
       case "incomingNotification":
         const messages = this.state.messages.concat(msg);
         this.setState({ messages: messages });
         break;
-      
+
       case "userCount":
-        this.setState({ userCount: msg.count });     
+        this.setState({ userCount: msg.count });
         break;
 
       default:

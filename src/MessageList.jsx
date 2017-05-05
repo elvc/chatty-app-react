@@ -7,7 +7,8 @@ export default class MessageList extends Component {
       <Message 
         key={message.id} 
         username={message.username} 
-        content={message.content} />
+        content={message.content} 
+        color={message.color} />
     );
  
     return (
