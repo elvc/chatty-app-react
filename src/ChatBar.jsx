@@ -45,15 +45,15 @@ export default class ChatBar extends Component {
 
   render() {
     return (
-      <footer className="chatbar">
+      <footer className='chatbar'>
         <input
-          className="chatbar-username"
+          className='chatbar-username'
           placeholder={this.props.username}
           onKeyPress={this.submitUserChange}
           onChange={this.handleKeyChange('user')} />
         <input
-          className="chatbar-message"
-          placeholder="Type a message and hit ENTER"
+          className='chatbar-message'
+          placeholder='Type a message and hit ENTER'
           onKeyPress={this.submitPost}
           onChange={this.handleKeyChange('content')}
           value={this.state.content} />
