@@ -54,7 +54,7 @@ wss.on('connection', (ws) => {
         msgTemp.type = 'incomingNotification';
         break;
       default:
-        throw new Error("Unknown event type from client side" + msgTemp.type)
+        throw new Error('Unknown event type from client side' + msgTemp.type)
     }
 
     const msgToBroadcast = JSON.stringify(msgTemp);
