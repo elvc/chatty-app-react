@@ -22,6 +22,7 @@ export default class ChatBar extends Component {
     }
   }
 
+  // handle user name changes
   submitUserChange = (event) => {
     if (event.key === 'Enter') {
       this.props.changeUser(this.state.user);
@@ -29,10 +30,13 @@ export default class ChatBar extends Component {
     }
   }
 
+  // handle new message
   submitPost = (event) => {
     if (event.key === 'Enter') {
       this.props.addMessage(this.state.content);
-      this.setState({ content: '' });
+      this.setState({
+        content: ''
+      });
     }
   }
 
